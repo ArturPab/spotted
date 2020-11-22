@@ -1,0 +1,29 @@
+package pl.pabjan.spotted.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+public class Comment {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotEmpty
+    private String text;
+
+    @ManyToOne
+    @JoinColumn(name = "postId", referencedColumnName = "postId")
+    private Post post;
+
+    @ManyToOne
+    @JoinColumn(name = "userId", referencedColumnName = "userId")
+    private User user;
+}

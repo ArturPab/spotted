@@ -5,19 +5,22 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
+import java.time.Instant;
 
-@Entity
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-public class City {
+@Entity
+@Table(name = "token")
+public class VerificationToken {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long cityId;
+    private Long id;
 
-    private String cityName;
+    private String token;
 
-    @OneToMany
-    private List<Post> posts;
+    @OneToOne(fetch = FetchType.LAZY)
+    private User user;
+    private Instant expiryDate;
 }
