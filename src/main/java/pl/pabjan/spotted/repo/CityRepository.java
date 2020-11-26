@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import pl.pabjan.spotted.model.City;
 
 @Repository
-public interface CityRepository extends JpaRepository<Long, City> {
+public interface CityRepository extends JpaRepository<City, Long> {
 }

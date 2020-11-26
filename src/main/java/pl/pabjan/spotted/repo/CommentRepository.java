@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import pl.pabjan.spotted.model.Comment;
 
 @Repository
-public interface CommentRepository extends JpaRepository<Long, Comment> {
+public interface CommentRepository extends JpaRepository<Comment, Long> {
 }

@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import pl.pabjan.spotted.model.Post;
 
 @Repository
-public interface PostRepository extends JpaRepository<Long, Post> {
+public interface PostRepository extends JpaRepository<Post, Long> {
 }
