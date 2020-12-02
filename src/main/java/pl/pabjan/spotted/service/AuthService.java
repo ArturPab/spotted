@@ -1,23 +1,18 @@
 package pl.pabjan.spotted.service;
 
 import lombok.AllArgsConstructor;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.pabjan.spotted.config.RestAuthenticationSuccessHandler;
-import pl.pabjan.spotted.controller.dto.LoginRequest;
-import pl.pabjan.spotted.controller.dto.LoginResponse;
 import pl.pabjan.spotted.controller.dto.RegisterRequest;
 import pl.pabjan.spotted.exceptions.SpottedException;
+import pl.pabjan.spotted.model.Authority;
+
 import pl.pabjan.spotted.model.NotificationEmail;
 import pl.pabjan.spotted.model.User;
 import pl.pabjan.spotted.model.VerificationToken;
-import pl.pabjan.spotted.repo.RoleRepo;
+import pl.pabjan.spotted.repo.AuthorityRepository;
+
 import pl.pabjan.spotted.repo.UserRepository;
 import pl.pabjan.spotted.repo.VerificationTokenRepository;
 
@@ -33,7 +28,8 @@ public class AuthService {
     private final UserRepository userRepository;
     private final VerificationTokenRepository verificationTokenRepository;
     private final MailService mailService;
-    private final RoleRepo roleRepo;
+    private final AuthorityRepository authorityRepository;
+
 
     @Transactional
     public void signup(RegisterRequest registerRequest) {
@@ -43,8 +39,11 @@ public class AuthService {
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         user.setCreated(Instant.now());
         user.setEnabled(false);
-        user.setRoles(roleRepo.findByName("USER"));
+        Authority authority = new Authority();
+        authority.setAuthority("USER");
+        authority.setUser(user);
 
+        authorityRepository.save(authority);
         userRepository.save(user);
 
         String token = generateVerificationToken(user);

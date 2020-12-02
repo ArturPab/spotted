@@ -28,8 +28,6 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    final UserDetailsService userDetailsService;
-
     private final ObjectMapper objectMapper;
     private final RestAuthenticationFailureHandler failureHandler;
     private final RestAuthenticationSuccessHandler successHandler;
@@ -39,13 +37,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public SecurityConfig(ObjectMapper objectMapper,
                           RestAuthenticationFailureHandler failureHandler,
                           RestAuthenticationSuccessHandler successHandler,
-                          @Value("${jwt.secret}") String secret, DataSource dataSource, @Qualifier("userDetailsService") UserDetailsService userDetailsService) {
+                          @Value("${jwt.secret}") String secret, DataSource dataSource) {
         this.objectMapper = objectMapper;
         this.failureHandler = failureHandler;
         this.successHandler = successHandler;
         this.secret = secret;
         this.dataSource = dataSource;
-        this.userDetailsService = userDetailsService;
     }
 
     /*@Bean(BeanIds.AUTHENTICATION_MANAGER)
@@ -88,10 +85,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new JdbcUserDetailsManager(dataSource);
     }
 
-    @Autowired
+    /*@Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-    }
+    }*/
 
     @Bean
     PasswordEncoder passwordEncoder() {
