@@ -24,6 +24,7 @@ public class Post {
     @NotBlank(message = "Zawartość nie może być pusta!")
     private String description;
 
+    private String city;
     @Nullable
     private String url;
 
@@ -32,7 +33,4 @@ public class Post {
     private User user;
 
     private Instant created;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cityId", referencedColumnName = "cityId")
-    private City city;
 }

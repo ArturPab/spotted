@@ -14,7 +14,7 @@ import javax.validation.constraints.NotEmpty;
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long commentId;
 
     @NotEmpty
     private String text;
