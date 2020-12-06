@@ -24,6 +24,7 @@ public class Post {
     @NotBlank(message = "Zawartość nie może być pusta!")
     private String description;
 
+    @NotBlank(message = "Miejscowość jest wymagana!")
     private String city;
     @Nullable
     private String url;

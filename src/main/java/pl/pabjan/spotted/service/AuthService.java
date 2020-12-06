@@ -1,6 +1,9 @@
 package pl.pabjan.spotted.service;
 
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -79,16 +82,11 @@ public class AuthService {
         userRepository.save(user);
     }
 
-//    public LoginResponse getAuthorization(LoginRequest loginRequest) {
-//        User user = userRepository.findByUsername(loginRequest.getUsername()).orElseThrow(() -> new UsernameNotFoundException("Niepoprawny login lub hasło"));
-//        if(passwordEncoder.matches(loginRequest.getPassword(), user.getPassword()))
-//            return new LoginResponse(loginRequest.getUsername(), successHandler.getJwtToken());
-//        else
-//        Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
-//                loginRequest.getPassword()));
-//        SecurityContextHolder.getContext().setAuthentication(authenticate);
-//        return new LoginResponse(loginRequest.getUsername(), successHandler.getJwtToken());
-//
-//    }
-
+    @Transactional(readOnly = true)
+    public User getCurrentUser() {
+        UserDetails principal = (UserDetails) SecurityContextHolder.
+                getContext().getAuthentication().getPrincipal();
+        return userRepository.findByUsername(principal.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("User name not found - " + principal.getUsername()));
+    }
 }

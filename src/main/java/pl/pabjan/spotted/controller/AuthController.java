@@ -12,7 +12,6 @@ import static org.springframework.http.ResponseEntity.status;
 
 @RestController
 @AllArgsConstructor
-
 public class AuthController {
 
     private final AuthService authService;
