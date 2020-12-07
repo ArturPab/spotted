@@ -46,8 +46,8 @@ public class AuthService {
         authority.setAuthority("USER");
         authority.setUser(user);
 
-        authorityRepository.save(authority);
         userRepository.save(user);
+        authorityRepository.save(authority);
 
         String token = generateVerificationToken(user);
 

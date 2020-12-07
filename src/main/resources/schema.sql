@@ -12,7 +12,7 @@ create table authorities (
 
 
 
-create table comment (comment_id bigint not null auto_increment, text varchar(255), post_id bigint, user_id bigint, primary key (comment_id)) engine=InnoDB;
+create table comment (comment_id bigint not null auto_increment, content varchar(255), created datetime(6), post_id bigint, user_id bigint, primary key (comment_id)) engine=InnoDB;
 create table post (post_id bigint not null auto_increment, created datetime(6), description varchar(255), title varchar(255), url varchar(255), city_id bigint, user_id bigint, primary key (post_id)) engine=InnoDB;
 create table token (id bigint not null auto_increment, expiry_date datetime(6), token varchar(255), user_user_id bigint, primary key (id)) engine=InnoDB;
 alter table comment add constraint FKs1slvnkuemjsq2kj4h3vhx7i1 foreign key (post_id) references post (post_id);
