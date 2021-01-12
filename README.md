@@ -1,2 +1,2 @@
 # spotted
-Webpage created with Spring Boot and React.js
+Spotted backend created using Java + Spring Boot.
